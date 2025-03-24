@@ -35,13 +35,22 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
   const handleReveal = () => {
     if (player1Choice && player2Choice) {
       const winner = determineWinner(player1Choice, player2Choice);
-      let explanation = "It's a tie!";
+      let explanation = "It's a tie! Great minds think alike!";
       if (winner !== 'tie') {
         const winningChoice =
           winner === 'player1' ? player1Choice : player2Choice;
         const losingChoice =
           winner === 'player1' ? player2Choice : player1Choice;
-        explanation = `${winningChoice} beats ${losingChoice}`;
+
+        const messages: Record<string, string> = {
+          Rock: 'Rock crushes Scissors and flattens Lizard!',
+          Paper: 'Paper covers Rock and disproves Spock!',
+          Scissors: 'Scissors cut Paper and trim Lizard!',
+          Lizard: 'Lizard eats Paper and poisons Spock!',
+          Spock: 'Spock vaporizes Rock and breaks Scissors!',
+        };
+
+        explanation = `${winningChoice} beats ${losingChoice}. ${messages[winningChoice]}`;
       }
       setResult({ winner, explanation });
       updateScores(winner);

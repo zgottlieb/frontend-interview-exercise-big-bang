@@ -12,4 +12,9 @@ export interface Score {
 }
 
 export type Player = 'player1' | 'player2';
-export type Choice = 'Rock' | 'Paper' | 'Scissors' | 'Lizard' | 'Spock';
+export type Choice =
+  | 'Rock' // Crushes Scissors and flattens Lizard
+  | 'Paper' // Smothers Rock and disproves Spock's theories
+  | 'Scissors' // Shreds Paper and decapitates Lizard
+  | 'Lizard' // Poisons Spock and devours Paper
+  | 'Spock'; // Vaporizes Rock and smashes Scissors
