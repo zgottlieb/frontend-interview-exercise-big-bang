@@ -312,7 +312,8 @@ button.next-button:disabled {
 .game-on-text {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #000; /* Keep black text for better contrast */
+  color: #fff; /* Keep white for better visibility */
+  /* Removed text-shadow property */
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
   text-align: center;
@@ -387,24 +388,25 @@ button.next-button:disabled {
   padding: 0.5rem 1rem;
   margin-top: 1rem;
   text-align: center;
+  /* Removed box-shadow property */
 }
 
 .start-over-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-family: 'Orbitron', sans-serif;
-  background-color: #87ceeb; /* Light blue background */
+  background-color: #333; /* Charcoal background */
   color: white;
-  border: 2px solid #87ceeb;
+  border: 2px solid #333;
   border-radius: 10px;
   cursor: pointer;
   text-transform: uppercase;
-  box-shadow: 0 0 10px rgba(135, 206, 235, 0.8);
+  box-shadow: 0 0 10px rgba(50, 50, 50, 0.8);
   transition: all 0.3s ease;
 }
 
 .start-over-button:hover {
-  background-color: #5bb8d6;
-  border-color: #5bb8d6;
-  box-shadow: 0 0 15px rgba(135, 206, 235, 1);
+  background-color: #555; /* Slightly lighter charcoal on hover */
+  border-color: #555;
+  box-shadow: 0 0 15px rgba(50, 50, 50, 1);
 }
