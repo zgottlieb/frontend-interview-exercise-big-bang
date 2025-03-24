@@ -25,13 +25,20 @@ const GameBoard: React.FC = () => {
   if (!gameStep) {
     return (
       <div className="game-area">
-        <p className="game-on-text">Ready to Play?</p>
-        <button
-          onClick={() => setGameStep(GameStep.Player1Turn)}
-          className="start-button"
-        >
-          Start Round
-        </button>
+        <div className="game-board-container">
+          <div className="scoreboard-container">
+            {/* Scoreboard will be rendered here */}
+          </div>
+          <div className="ready-container">
+            <p className="game-on-text">Ready to Play?</p>
+            <button
+              onClick={() => setGameStep(GameStep.Player1Turn)}
+              className="start-button"
+            >
+              Start Round
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
