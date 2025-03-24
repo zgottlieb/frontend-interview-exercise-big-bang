@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import automataLogo from '../assets/automata.png';
 import Game from '../components/Game';
 import Scoreboard from '../components/Scoreboard';
+import { useSessionStorage } from '../hooks/useSessionStorage';
 import './App.css';
 
 const App: React.FC = () => {
-  const [player1Score, setPlayer1Score] = useState(0);
-  const [player2Score, setPlayer2Score] = useState(0);
-  const [gameActive, setGameActive] = useState(false);
+  const [player1Score, setPlayer1Score] = useSessionStorage<number>(
+    'player1Score',
+    0
+  );
+  const [player2Score, setPlayer2Score] = useSessionStorage<number>(
+    'player2Score',
+    0
+  );
+  const [gameActive, setGameActive] = useSessionStorage<boolean>(
+    'gameActive',
+    false
+  );
 
   const updateScores = (winner: 'player1' | 'player2' | 'tie') => {
     if (winner === 'player1') setPlayer1Score(player1Score + 1);
@@ -22,6 +32,7 @@ const App: React.FC = () => {
     setPlayer1Score(0);
     setPlayer2Score(0);
     setGameActive(false);
+    sessionStorage.clear();
   };
 
   return (
