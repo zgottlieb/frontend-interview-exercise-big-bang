@@ -1,4 +1,20 @@
+body {
+  background: linear-gradient(
+    135deg,
+    #1e1e2f,
+    #2a2a3d
+  ); /* Match App background */
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron', sans-serif;
+}
+
 #root {
+  background: linear-gradient(
+    135deg,
+    #1e1e2f,
+    #2a2a3d
+  ); /* Match App background */
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -6,8 +22,8 @@
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 4em; /* Shrink the Automata logo */
+  padding: 1em;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -83,9 +99,9 @@
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem; /* Shrink the game title */
   color: #4caf50;
-  text-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Reduce glow effect */
   margin-bottom: 1rem;
 }
 
@@ -154,28 +170,34 @@ button {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  flex-direction: column; /* Display as a clean list */
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .choices-container button {
-  padding: 1rem;
-  font-size: 1.5rem;
+  padding: 0.75rem; /* Shrink the game option buttons */
+  font-size: 1.2rem; /* Reduce font size */
   background: linear-gradient(135deg, #2a2a3d, #1e1e2f);
   border: 2px solid #4caf50;
   border-radius: 10px;
   color: #4caf50;
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Reduce glow effect */
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%; /* Full width for list items */
+  max-width: 300px;
+  text-align: center;
 }
 
 .choices-container button:hover {
   background: #4caf50;
   color: #fff;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 1);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Reduce hover glow effect */
 }
 
 button.next-button,
@@ -200,21 +222,34 @@ button.reveal-button:hover {
   box-shadow: 0 0 15px rgba(0, 123, 255, 1);
 }
 
+button.next-button:disabled {
+  background-color: #555;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.choices-container button.selected {
+  background: #4caf50;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 1);
+}
+
 .scoreboard {
   background: linear-gradient(135deg, #1e1e2f, #2a2a3d);
   border: 2px solid #4caf50;
   border-radius: 10px;
-  padding: 1rem;
-  margin: 1rem auto;
-  max-width: 400px;
+  padding: 0.5rem; /* Shrink padding */
+  margin: 0.5rem; /* Shrink margin */
+  max-width: 200px; /* Shrink width */
   color: #fff;
   text-align: center;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
 .scoreboard h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 1.2rem; /* Shrink title font size */
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   color: #4caf50;
 }
@@ -248,4 +283,114 @@ button.reveal-button:hover {
   font-size: 2rem;
   margin-right: 0.5rem;
   text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+  position: relative;
+}
+
+/* Remove hover popover styles */
+.emoji::after {
+  content: none;
+}
+
+.game-area {
+  padding: 2rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  min-height: 300px; /* Ensure consistent size */
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.game-area.game-on {
+  background-color: #d3d3d3; /* Light-medium gray background */
+}
+
+.game-on-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000; /* Keep black text for better contrast */
+  /* Remove background color */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Keep subtle shadow for visibility */
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header .logo {
+  height: 4em;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #4caf50;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.game-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.scoreboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reset-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  background-color: #f44336;
+  color: white;
+  border: 2px solid #f44336;
+  border-radius: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 1);
+}
+
+.result-explanation {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000; /* Keep black text for better contrast */
+  /* Remove background color */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Keep subtle shadow for visibility */
+  margin-top: 1rem;
+  text-align: center;
 }

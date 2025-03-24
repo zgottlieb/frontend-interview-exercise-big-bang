@@ -18,9 +18,15 @@ const App: React.FC = () => {
     setGameActive(true);
   };
 
+  const resetGame = () => {
+    setPlayer1Score(0);
+    setPlayer2Score(0);
+    setGameActive(false);
+  };
+
   return (
     <div className={`App ${gameActive ? 'active' : ''}`}>
-      <div>
+      <header className="header">
         <a href="https://automata.tech/" target="_blank">
           <img
             src={String(automataLogo)}
@@ -28,19 +34,33 @@ const App: React.FC = () => {
             alt="Automata logo"
           />
         </a>
+        <h1>Rock, Paper, Scissors, Lizard, Spock</h1>
+      </header>
+      <div className="main-content">
+        <div className="scoreboard-container">
+          <Scoreboard player1Score={player1Score} player2Score={player2Score} />
+          <button onClick={resetGame} className="reset-button">
+            Reset Game
+          </button>
+        </div>
+        <div className={`game-area ${gameActive ? 'game-on' : ''}`}>
+          <p className="game-on-text">
+            {gameActive ? 'Game On!' : 'Ready to Play?'}
+          </p>
+          <div className="game-content">
+            {!gameActive ? (
+              <button onClick={startGame} className="start-button">
+                Start Round
+              </button>
+            ) : (
+              <Game
+                updateScores={updateScores}
+                resetGame={() => setGameActive(false)}
+              />
+            )}
+          </div>
+        </div>
       </div>
-      <h1>Rock, Paper, Scissors, Lizard, Spock</h1>
-      <Scoreboard player1Score={player1Score} player2Score={player2Score} />
-      {!gameActive ? (
-        <button onClick={startGame} className="start-button">
-          Start Round
-        </button>
-      ) : (
-        <Game
-          updateScores={updateScores}
-          resetGame={() => setGameActive(false)}
-        />
-      )}
     </div>
   );
 };

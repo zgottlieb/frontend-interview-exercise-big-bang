@@ -25,6 +25,13 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
     'Spock',
   ];
 
+  const toggleChoice = (
+    choice: string,
+    setChoice: React.Dispatch<React.SetStateAction<string | null>>
+  ) => {
+    setChoice((prevChoice) => (prevChoice === choice ? null : choice));
+  };
+
   const handleReveal = () => {
     if (player1Choice && player2Choice) {
       const winner = determineWinner(player1Choice, player2Choice);
@@ -49,16 +56,22 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
           <h2>Player 1, make your choice</h2>
           <div className="choices-container">
             {choices.map((choice) => (
-              <Button key={choice} onClick={() => setPlayer1Choice(choice)}>
+              <Button
+                key={choice}
+                onClick={() => toggleChoice(choice, setPlayer1Choice)}
+                className={player1Choice === choice ? 'selected' : ''}
+              >
                 <span className="emoji">{icons[choice]}</span> {choice}
               </Button>
             ))}
           </div>
-          {player1Choice && (
-            <button onClick={() => setStep(2)} className="next-button">
-              Submit
-            </button>
-          )}
+          <button
+            onClick={() => setStep(2)}
+            className="next-button"
+            disabled={!player1Choice}
+          >
+            Submit
+          </button>
         </div>
       )}
       {step === 2 && (
@@ -66,16 +79,22 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
           <h2>Player 2, make your choice</h2>
           <div className="choices-container">
             {choices.map((choice) => (
-              <Button key={choice} onClick={() => setPlayer2Choice(choice)}>
+              <Button
+                key={choice}
+                onClick={() => toggleChoice(choice, setPlayer2Choice)}
+                className={player2Choice === choice ? 'selected' : ''}
+              >
                 <span className="emoji">{icons[choice]}</span> {choice}
               </Button>
             ))}
           </div>
-          {player2Choice && (
-            <button onClick={() => setStep(3)} className="next-button">
-              Submit
-            </button>
-          )}
+          <button
+            onClick={() => setStep(3)}
+            className="next-button"
+            disabled={!player2Choice}
+          >
+            Submit
+          </button>
         </div>
       )}
       {step === 3 && (
@@ -92,7 +111,7 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
               ? "It's a tie!"
               : `Player ${result.winner === 'player1' ? '1' : '2'} wins!`}
           </h2>
-          <p>{result.explanation}</p>
+          <p className="result-explanation">{result.explanation}</p>
           <button onClick={resetGame} className="restart-button">
             Restart Game
           </button>

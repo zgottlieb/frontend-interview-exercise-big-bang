@@ -11,7 +11,7 @@ const Scoreboard: React.FC<ScoreboardProps> = ({
 }) => {
   return (
     <div className="scoreboard">
-      <h2>Scoreboard</h2>
+      <h2>Score</h2>
       <div className="score-container">
         <div className="score">
           <span className="label">Player 1</span>
