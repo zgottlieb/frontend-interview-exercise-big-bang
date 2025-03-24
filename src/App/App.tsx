@@ -1,45 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import automataLogo from '../assets/automata.png';
 import Game from '../components/Game';
 import Scoreboard from '../components/Scoreboard';
-import { useSessionStorage } from '../hooks/useSessionStorage';
+import Settings from '../components/Settings';
+import { useGameContext } from '../context/GameContext';
 import './App.css';
 
 const App: React.FC = () => {
-  const [player1Score, setPlayer1Score] = useSessionStorage<number>(
-    'player1Score',
-    0
-  );
-  const [player2Score, setPlayer2Score] = useSessionStorage<number>(
-    'player2Score',
-    0
-  );
-  const [gameActive, setGameActive] = useSessionStorage<boolean>(
-    'gameActive',
-    false
-  );
-  const [round, setRound] = useSessionStorage<number>('round', 1);
+  const {
+    player1Name,
+    player2Name,
+    player1Score,
+    player2Score,
+    setPlayer1Score,
+    setPlayer2Score,
+    round,
+    setRound,
+    resetGame,
+  } = useGameContext();
+  const [gameActive, setGameActive] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const updateScores = (winner: 'player1' | 'player2' | 'tie') => {
-    if (winner === 'player1') setPlayer1Score(player1Score + 1);
-    if (winner === 'player2') setPlayer2Score(player2Score + 1);
+    if (winner === 'player1') setPlayer1Score((prev) => prev + 1);
+    if (winner === 'player2') setPlayer2Score((prev) => prev + 1);
   };
 
-  const startGame = () => {
-    setGameActive(true);
-  };
-
-  const resetGame = () => {
-    setPlayer1Score(0);
-    setPlayer2Score(0);
-    setGameActive(false);
-    setRound(1); // Reset the round to 1
-    sessionStorage.clear();
-  };
+  const startGame = () => setGameActive(true);
 
   const handleNextRound = () => {
-    setRound(round + 1); // Increment the round
-    setGameActive(true); // Immediately start the next round
+    setRound((prev) => prev + 1);
+    setGameActive(true);
   };
 
   return (
@@ -53,32 +44,46 @@ const App: React.FC = () => {
           />
         </a>
         <h1>Rock, Paper, Scissors, Lizard, Spock</h1>
+        <button
+          onClick={() => setShowSettings(!showSettings)}
+          className="settings-button"
+        >
+          {showSettings ? 'Back to Game' : 'Settings'}
+        </button>
       </header>
-      <div className="main-content">
-        <div className="scoreboard-container">
-          <Scoreboard player1Score={player1Score} player2Score={player2Score} />
-          <button onClick={resetGame} className="reset-button">
-            Reset Game
-          </button>
-        </div>
-        <div className={`game-area ${gameActive ? 'game-on' : ''}`}>
-          <p className="game-on-text">
-            {gameActive ? `Current Round: ${round}` : 'Ready to Play?'}
-          </p>
-          <div className="game-content">
-            {!gameActive ? (
-              <button onClick={startGame} className="start-button">
-                Start Round
-              </button>
-            ) : (
-              <Game
-                updateScores={updateScores}
-                startNextRound={handleNextRound} // Renamed from resetGame
-              />
-            )}
+      {showSettings ? (
+        <Settings />
+      ) : (
+        <div className="main-content">
+          <div className="scoreboard-container">
+            <Scoreboard
+              player1Name={player1Name}
+              player2Name={player2Name}
+              player1Score={player1Score}
+              player2Score={player2Score}
+            />
+          </div>
+          <div className={`game-area ${gameActive ? 'game-on' : ''}`}>
+            <p className="game-on-text">
+              {gameActive ? `Current Round: ${round}` : 'Ready to Play?'}
+            </p>
+            <div className="game-content">
+              {!gameActive ? (
+                <button onClick={startGame} className="start-button">
+                  Start Round
+                </button>
+              ) : (
+                <Game
+                  updateScores={updateScores}
+                  startNextRound={handleNextRound}
+                  player1Name={player1Name}
+                  player2Name={player2Name}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -6,9 +6,16 @@ import { icons } from '../assets/icons';
 interface GameProps {
   updateScores: (winner: 'player1' | 'player2' | 'tie') => void;
   startNextRound: () => void; // Renamed from resetGame
+  player1Name: string;
+  player2Name: string;
 }
 
-const Game: React.FC<GameProps> = ({ updateScores, startNextRound }) => {
+const Game: React.FC<GameProps> = ({
+  updateScores,
+  startNextRound,
+  player1Name,
+  player2Name,
+}) => {
   const [player1Choice, setPlayer1Choice] = useState<string | null>(null);
   const [player2Choice, setPlayer2Choice] = useState<string | null>(null);
   const [step, setStep] = useState(1);
@@ -70,7 +77,7 @@ const Game: React.FC<GameProps> = ({ updateScores, startNextRound }) => {
     <div>
       {step === 1 && (
         <div>
-          <h2>Player 1, make your choice</h2>
+          <h2>{player1Name}, make your choice</h2>
           <div className="choices-container">
             {choices.map((choice) => (
               <Button
@@ -93,7 +100,7 @@ const Game: React.FC<GameProps> = ({ updateScores, startNextRound }) => {
       )}
       {step === 2 && (
         <div>
-          <h2>Player 2, make your choice</h2>
+          <h2>{player2Name}, make your choice</h2>
           <div className="choices-container">
             {choices.map((choice) => (
               <Button
