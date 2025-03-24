@@ -54,7 +54,7 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
       }
       setResult({ winner, explanation });
       updateScores(winner);
-      setStep(4);
+      setStep(4); // Show the result without incrementing the round
     }
   };
 
@@ -117,7 +117,7 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
           </h2>
           <p className="result-explanation">{result.explanation}</p>
           <button onClick={resetGame} className="start-over-button">
-            Start Over
+            Next Round
           </button>
         </div>
       )}

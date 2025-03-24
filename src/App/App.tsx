@@ -18,6 +18,7 @@ const App: React.FC = () => {
     'gameActive',
     false
   );
+  const [round, setRound] = useSessionStorage<number>('round', 1);
 
   const updateScores = (winner: 'player1' | 'player2' | 'tie') => {
     if (winner === 'player1') setPlayer1Score(player1Score + 1);
@@ -32,7 +33,13 @@ const App: React.FC = () => {
     setPlayer1Score(0);
     setPlayer2Score(0);
     setGameActive(false);
+    setRound(1); // Reset the round to 1
     sessionStorage.clear();
+  };
+
+  const handleNextRound = () => {
+    setRound(round + 1); // Increment the round only when starting the next round
+    setGameActive(false);
   };
 
   return (
@@ -56,7 +63,7 @@ const App: React.FC = () => {
         </div>
         <div className={`game-area ${gameActive ? 'game-on' : ''}`}>
           <p className="game-on-text">
-            {gameActive ? 'Game On!' : 'Ready to Play?'}
+            {gameActive ? `Current Round: ${round}` : 'Ready to Play?'}
           </p>
           <div className="game-content">
             {!gameActive ? (
@@ -66,7 +73,7 @@ const App: React.FC = () => {
             ) : (
               <Game
                 updateScores={updateScores}
-                resetGame={() => setGameActive(false)}
+                resetGame={handleNextRound} // Call handleNextRound instead of directly resetting
               />
             )}
           </div>
