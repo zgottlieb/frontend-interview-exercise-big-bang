@@ -1,65 +1,32 @@
 import React, { useState } from 'react';
-import { determineWinner } from '../utils/gameLogic';
-import Button from './Button';
 import { icons } from '../assets/icons';
+import { useGameResult } from '../hooks/useGameResult';
+import { Choice } from '../types';
+import Button from './Button';
 
-interface GameProps {
+const Game: React.FC<{
   updateScores: (winner: 'player1' | 'player2' | 'tie') => void;
-  startNextRound: () => void; // Renamed from resetGame
+  startNextRound: () => void;
   player1Name: string;
   player2Name: string;
-}
-
-const Game: React.FC<GameProps> = ({
-  updateScores,
-  startNextRound,
-  player1Name,
-  player2Name,
-}) => {
-  const [player1Choice, setPlayer1Choice] = useState<string | null>(null);
-  const [player2Choice, setPlayer2Choice] = useState<string | null>(null);
+}> = ({ updateScores, startNextRound, player1Name, player2Name }) => {
+  const [player1Choice, setPlayer1Choice] = useState<Choice | null>(null);
+  const [player2Choice, setPlayer2Choice] = useState<Choice | null>(null);
   const [step, setStep] = useState(1);
-  const [result, setResult] = useState<{
-    winner: string;
-    explanation: string;
-  } | null>(null);
+  const { result, calculateResult, resetResult } = useGameResult();
 
-  const choices: (keyof typeof icons)[] = [
-    'Rock',
-    'Paper',
-    'Scissors',
-    'Lizard',
-    'Spock',
-  ];
+  const choices: Choice[] = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock'];
 
   const toggleChoice = (
-    choice: string,
-    setChoice: React.Dispatch<React.SetStateAction<string | null>>
+    choice: Choice,
+    setChoice: React.Dispatch<React.SetStateAction<Choice | null>>
   ) => {
     setChoice((prevChoice) => (prevChoice === choice ? null : choice));
   };
 
   const handleReveal = () => {
     if (player1Choice && player2Choice) {
-      const winner = determineWinner(player1Choice, player2Choice);
-      let explanation = "It's a tie! Great minds think alike!";
-      if (winner !== 'tie') {
-        const winningChoice =
-          winner === 'player1' ? player1Choice : player2Choice;
-        const losingChoice =
-          winner === 'player1' ? player2Choice : player1Choice;
-
-        const messages: Record<string, string> = {
-          Rock: 'Rock crushes Scissors and flattens Lizard!',
-          Paper: 'Paper covers Rock and disproves Spock!',
-          Scissors: 'Scissors cut Paper and trim Lizard!',
-          Lizard: 'Lizard eats Paper and poisons Spock!',
-          Spock: 'Spock vaporizes Rock and breaks Scissors!',
-        };
-
-        explanation = `${winningChoice} beats ${losingChoice}. ${messages[winningChoice]}`;
-      }
-      setResult({ winner, explanation });
+      const winner = calculateResult(player1Choice, player2Choice);
       updateScores(winner);
       setStep(4); // Show the result
     }
@@ -68,9 +35,9 @@ const Game: React.FC<GameProps> = ({
   const handleNextRound = () => {
     setPlayer1Choice(null);
     setPlayer2Choice(null);
-    setResult(null);
+    resetResult();
     setStep(1); // Ensure step is reset to 1 for Player 1's turn
-    startNextRound(); // Call the renamed prop to increment the round
+    startNextRound();
   };
 
   return (
@@ -113,9 +80,7 @@ const Game: React.FC<GameProps> = ({
             ))}
           </div>
           <button
-            onClick={() => {
-              handleReveal();
-            }}
+            onClick={handleReveal}
             className="next-button"
             disabled={!player2Choice}
           >

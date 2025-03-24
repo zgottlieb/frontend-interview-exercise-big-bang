@@ -8,16 +8,24 @@ export const choices: Choice[] = [
   'spock',
 ];
 
+export enum Messages {
+  Rock = 'Rock crushes Scissors and flattens Lizard!',
+  Paper = 'Paper covers Rock and disproves Spock!',
+  Scissors = 'Scissors cut Paper and trim Lizard!',
+  Lizard = 'Lizard eats Paper and poisons Spock!',
+  Spock = 'Spock vaporizes Rock and breaks Scissors!',
+}
+
 export const determineWinner = (
   player1Choice: string,
   player2Choice: string
 ): 'player1' | 'player2' | 'tie' => {
   const rules: Record<string, string[]> = {
-    Rock: ['Scissors', 'Lizard'], // Rock crushes Scissors and flattens Lizard
-    Paper: ['Rock', 'Spock'], // Paper smothers Rock and disproves Spock's theories
-    Scissors: ['Paper', 'Lizard'], // Scissors shred Paper and decapitate Lizard
-    Lizard: ['Spock', 'Paper'], // Lizard poisons Spock and devours Paper
-    Spock: ['Scissors', 'Rock'], // Spock vaporizes Rock and smashes Scissors
+    Rock: ['Scissors', 'Lizard'],
+    Paper: ['Rock', 'Spock'],
+    Scissors: ['Paper', 'Lizard'],
+    Lizard: ['Spock', 'Paper'],
+    Spock: ['Scissors', 'Rock'],
   };
 
   if (player1Choice === player2Choice) return 'tie';
