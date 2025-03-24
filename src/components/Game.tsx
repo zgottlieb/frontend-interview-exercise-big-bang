@@ -89,18 +89,13 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
             ))}
           </div>
           <button
-            onClick={() => setStep(3)}
+            onClick={() => {
+              handleReveal();
+            }}
             className="next-button"
             disabled={!player2Choice}
           >
             Submit
-          </button>
-        </div>
-      )}
-      {step === 3 && (
-        <div>
-          <button onClick={handleReveal} className="reveal-button">
-            Reveal the Winner!
           </button>
         </div>
       )}
