@@ -313,10 +313,7 @@ button.next-button:disabled {
   font-size: 1.5rem;
   font-weight: bold;
   color: #000; /* Keep black text for better contrast */
-  /* Remove background color */
   padding: 0.5rem 1rem;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Keep subtle shadow for visibility */
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -387,10 +384,7 @@ button.next-button:disabled {
   font-size: 1.2rem;
   font-weight: bold;
   color: #000; /* Keep black text for better contrast */
-  /* Remove background color */
   padding: 0.5rem 1rem;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Keep subtle shadow for visibility */
   margin-top: 1rem;
   text-align: center;
 }
