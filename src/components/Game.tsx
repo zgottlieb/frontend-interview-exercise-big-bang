@@ -5,10 +5,10 @@ import { icons } from '../assets/icons';
 
 interface GameProps {
   updateScores: (winner: 'player1' | 'player2' | 'tie') => void;
-  resetGame: () => void;
+  startNextRound: () => void; // Renamed from resetGame
 }
 
-const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
+const Game: React.FC<GameProps> = ({ updateScores, startNextRound }) => {
   const [player1Choice, setPlayer1Choice] = useState<string | null>(null);
   const [player2Choice, setPlayer2Choice] = useState<string | null>(null);
   const [step, setStep] = useState(1);
@@ -54,8 +54,16 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
       }
       setResult({ winner, explanation });
       updateScores(winner);
-      setStep(4); // Show the result without incrementing the round
+      setStep(4); // Show the result
     }
+  };
+
+  const handleNextRound = () => {
+    setPlayer1Choice(null);
+    setPlayer2Choice(null);
+    setResult(null);
+    setStep(1); // Ensure step is reset to 1 for Player 1's turn
+    startNextRound(); // Call the renamed prop to increment the round
   };
 
   return (
@@ -116,7 +124,7 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
               : `Player ${result.winner === 'player1' ? '1' : '2'} wins!`}
           </h2>
           <p className="result-explanation">{result.explanation}</p>
-          <button onClick={resetGame} className="start-over-button">
+          <button onClick={handleNextRound} className="start-over-button">
             Next Round
           </button>
         </div>

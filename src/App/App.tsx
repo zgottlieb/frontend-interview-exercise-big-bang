@@ -38,8 +38,8 @@ const App: React.FC = () => {
   };
 
   const handleNextRound = () => {
-    setRound(round + 1); // Increment the round only when starting the next round
-    setGameActive(false);
+    setRound(round + 1); // Increment the round
+    setGameActive(true); // Immediately start the next round
   };
 
   return (
@@ -73,7 +73,7 @@ const App: React.FC = () => {
             ) : (
               <Game
                 updateScores={updateScores}
-                resetGame={handleNextRound} // Call handleNextRound instead of directly resetting
+                startNextRound={handleNextRound} // Renamed from resetGame
               />
             )}
           </div>
