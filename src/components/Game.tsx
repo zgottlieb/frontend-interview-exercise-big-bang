@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { determineWinner } from '../utils/gameLogic';
 import Button from './Button';
+import { icons } from '../assets/icons';
 
 interface GameProps {
   updateScores: (winner: 'player1' | 'player2' | 'tie') => void;
@@ -16,36 +17,13 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
     explanation: string;
   } | null>(null);
 
-  const choices = [
-    { name: 'Rock', glyph: '✊' },
-    { name: 'Paper', glyph: '✋' },
-    { name: 'Scissors', glyph: '✌️' },
-    { name: 'Lizard', glyph: '🦎' },
-    { name: 'Spock', glyph: '🖖' },
+  const choices: (keyof typeof icons)[] = [
+    'Rock',
+    'Paper',
+    'Scissors',
+    'Lizard',
+    'Spock',
   ];
-
-  const rules: Record<string, { beats: string; reason: string }[]> = {
-    Rock: [
-      { beats: 'Scissors', reason: 'Rock crushes Scissors' },
-      { beats: 'Lizard', reason: 'Rock crushes Lizard' },
-    ],
-    Paper: [
-      { beats: 'Rock', reason: 'Paper covers Rock' },
-      { beats: 'Spock', reason: 'Paper disproves Spock' },
-    ],
-    Scissors: [
-      { beats: 'Paper', reason: 'Scissors cuts Paper' },
-      { beats: 'Lizard', reason: 'Scissors decapitates Lizard' },
-    ],
-    Lizard: [
-      { beats: 'Spock', reason: 'Lizard poisons Spock' },
-      { beats: 'Paper', reason: 'Lizard eats Paper' },
-    ],
-    Spock: [
-      { beats: 'Scissors', reason: 'Spock smashes Scissors' },
-      { beats: 'Rock', reason: 'Spock vaporizes Rock' },
-    ],
-  };
 
   const handleReveal = () => {
     if (player1Choice && player2Choice) {
@@ -56,9 +34,7 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
           winner === 'player1' ? player1Choice : player2Choice;
         const losingChoice =
           winner === 'player1' ? player2Choice : player1Choice;
-        explanation =
-          rules[winningChoice].find((rule) => rule.beats === losingChoice)
-            ?.reason || '';
+        explanation = `${winningChoice} beats ${losingChoice}`;
       }
       setResult({ winner, explanation });
       updateScores(winner);
@@ -71,14 +47,13 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
       {step === 1 && (
         <div>
           <h2>Player 1, make your choice</h2>
-          {choices.map((choice) => (
-            <Button
-              key={choice.name}
-              onClick={() => setPlayer1Choice(choice.name)}
-            >
-              {choice.glyph} {choice.name}
-            </Button>
-          ))}
+          <div className="choices-container">
+            {choices.map((choice) => (
+              <Button key={choice} onClick={() => setPlayer1Choice(choice)}>
+                <span className="emoji">{icons[choice]}</span> {choice}
+              </Button>
+            ))}
+          </div>
           {player1Choice && (
             <button onClick={() => setStep(2)} className="next-button">
               Submit
@@ -89,14 +64,13 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
       {step === 2 && (
         <div>
           <h2>Player 2, make your choice</h2>
-          {choices.map((choice) => (
-            <Button
-              key={choice.name}
-              onClick={() => setPlayer2Choice(choice.name)}
-            >
-              {choice.glyph} {choice.name}
-            </Button>
-          ))}
+          <div className="choices-container">
+            {choices.map((choice) => (
+              <Button key={choice} onClick={() => setPlayer2Choice(choice)}>
+                <span className="emoji">{icons[choice]}</span> {choice}
+              </Button>
+            ))}
+          </div>
           {player2Choice && (
             <button onClick={() => setStep(3)} className="next-button">
               Submit
