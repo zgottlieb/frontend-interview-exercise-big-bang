@@ -112,8 +112,8 @@ const Game: React.FC<GameProps> = ({ updateScores, resetGame }) => {
               : `Player ${result.winner === 'player1' ? '1' : '2'} wins!`}
           </h2>
           <p className="result-explanation">{result.explanation}</p>
-          <button onClick={resetGame} className="restart-button">
-            Restart Game
+          <button onClick={resetGame} className="start-over-button">
+            Start Over
           </button>
         </div>
       )}
