@@ -16,6 +16,12 @@ const Settings: React.FC = () => {
   const handleSavePlayer1 = () => setPlayer1Name(tempPlayer1Name);
   const handleSavePlayer2 = () => setPlayer2Name(tempPlayer2Name);
 
+  const handleReset = () => {
+    resetGame();
+    setTempPlayer1Name('Player 1');
+    setTempPlayer2Name('Player 2');
+  };
+
   return (
     <div className="settings">
       <h2>Settings</h2>
@@ -51,7 +57,7 @@ const Settings: React.FC = () => {
           Save
         </button>
       </div>
-      <button onClick={resetGame} className="reset-button">
+      <button onClick={handleReset} className="reset-button">
         Reset All Game Settings
       </button>
     </div>
