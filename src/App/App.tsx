@@ -3,8 +3,9 @@ import automataLogo from '../assets/automata.png';
 import Game from '../components/Game';
 import Scoreboard from '../components/Scoreboard';
 import Settings from '../components/Settings';
-import { useGameContext } from '../context/GameContext';
+
 import './App.css';
+import useGameContext from '../context/useGameContext';
 
 const App: React.FC = () => {
   const {
@@ -16,7 +17,6 @@ const App: React.FC = () => {
     setPlayer2Score,
     round,
     setRound,
-    resetGame,
   } = useGameContext();
   const [gameActive, setGameActive] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -36,7 +36,7 @@ const App: React.FC = () => {
   return (
     <div className={`App ${gameActive ? 'active' : ''}`}>
       <header className="header">
-        <a href="https://automata.tech/" target="_blank">
+        <a href="https://automata.tech/" target="_blank" rel="noreferrer">
           <img
             src={String(automataLogo)}
             className="logo automata"

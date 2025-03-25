@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext } from 'react';
 import { useSessionStorage } from '../hooks/useSessionStorage';
 
 interface GameContextProps {
@@ -13,7 +13,7 @@ interface GameContextProps {
   round: number;
   setRound: React.Dispatch<React.SetStateAction<number>>;
   resetGame: () => void;
-  updateScores: (winner: 'player1' | 'player2' | 'tie') => void; // Added updateScores
+  updateScores: (winner: 'player1' | 'player2' | 'tie') => void;
 }
 
 const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -67,7 +67,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
         round,
         setRound,
         resetGame,
-        updateScores, // Added updateScores to the context value
+        updateScores,
       }}
     >
       {children}
@@ -75,10 +75,4 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export const useGameContext = (): GameContextProps => {
-  const context = useContext(GameContext);
-  if (!context) {
-    throw new Error('useGameContext must be used within a GameProvider');
-  }
-  return context;
-};
+export default GameContext;

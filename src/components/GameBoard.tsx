@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGameContext } from '../context/GameContext';
+import useGameContext from '../context/useGameContext';
 import Game from './Game';
 
 enum GameStep {
